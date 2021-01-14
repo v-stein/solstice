@@ -54,15 +54,27 @@
                 let text = document.createElement('div');
                 text.classList.add('user');
                 text.innerText = sentence;
-                annyang.trigger(sentence);
                 dialog.appendChild(text.cloneNode(true));
+                annyang.trigger(sentence.toLowerCase());
             }
 
             if (annyang) {
-                annyang.addCommands({
-                    "solstice": () => writeAnswer('That\'s me'),
-                    "solstice how is it going": () => writeAnswer('Fine, thank you')
-                });
+                let comms = {
+                    "hello solstice": () => {
+                        writeAnswer("Hello, human. What's your name?");
+                        annyang.removeCommands(comms);
+                        let helloCommands = {
+                            "*": (e) => {
+                                console.log(e);
+                                writeAnswer("Nice to meet you, human. I'm Solstice.");
+                                annyang.removeCommands(helloCommands);
+                                annyang.addCommands(comms);
+                            }
+                        }
+                    }
+                };
+
+                annyang.addCommands(comms);
                 annyang.start();
             }
 
