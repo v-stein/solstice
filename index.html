@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solstice</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script src="/js/solstice.js"></script>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+        .conversation {
+            width: 100%;
+            padding: 10em;
+        }
+        .dialog, .tell {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="conversation">
+        <div class="dialog"></div>
+        <div class="tell">
+            <input id="user-input" type="text" style="width: 100%;">
+        </div>
+    </div>
+    <script>
+
+        window.addEventListener('load', () => {
+
+            const userInput = document.getElementById('user-input');
+
+            function writeAnswer (answer) {
+                let text = document.createElement('div');
+                text.classList.add('solstice');
+                text.innerText = answer;
+            }
+
+            function askSomething (sentence) {
+                let text = document.createElement('div');
+                text.classList.add('user');
+                text.innerText = sentence;
+                annyang.tell(sentence);
+            }
+
+            if (annyang) {
+                annyang.addCommands({
+                    "Solstice how is it going": () => writeAnswer('Fine, thank you')
+                });
+            }
+
+            userInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    askSomething(userInput.value);
+                    userInput.value = '';
+                }
+            })
+
+        })
+
+    </script>
+</body>
+</html>
