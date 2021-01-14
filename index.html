@@ -18,7 +18,7 @@
         }
         .dialog {
             border: 1px solid #000000;
-            max-height: 350px;
+            height: 350px;
             overflow-y: auto;
         }
         .solstice {
@@ -47,7 +47,7 @@
                 let text = document.createElement('div');
                 text.classList.add('solstice');
                 text.innerText = answer;
-                dialog.appendChild(text.cloneNode());
+                dialog.appendChild(text.cloneNode(true));
             }
 
             function askSomething (sentence) {
@@ -55,7 +55,7 @@
                 text.classList.add('user');
                 text.innerText = sentence;
                 annyang.trigger(sentence);
-                dialog.appendChild(text.cloneNode());
+                dialog.appendChild(text.cloneNode(true));
             }
 
             if (annyang) {
