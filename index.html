@@ -64,7 +64,7 @@
                         writeAnswer("Hello, human. What's your name?");
                         annyang.removeCommands(comms);
                         let helloCommands = {
-                            "*": (e) => {
+                            "(my name is) *name": (e) => {
                                 console.log(e);
                                 writeAnswer("Nice to meet you, human. I'm Solstice.");
                                 annyang.removeCommands(helloCommands);
