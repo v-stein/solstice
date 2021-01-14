@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Solstice</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
-    <script src="/js/solstice.js"></script>
+    <script src="js/solstice.js"></script>
     <style>
         *, *:before, *:after {
             box-sizing: border-box;
@@ -12,9 +12,18 @@
         .conversation {
             width: 100%;
             padding: 10em;
+            border: 1px solid #000000;
+            max-height: 350px;
+            overflow-y: auto;
         }
         .dialog, .tell {
             width: 100%;
+        }
+        .solstice {
+            color: sandybrown;
+        }
+        .user {
+            color: cadetblue;
         }
     </style>
 </head>
@@ -41,13 +50,14 @@
                 let text = document.createElement('div');
                 text.classList.add('user');
                 text.innerText = sentence;
-                annyang.tell(sentence);
+                annyang.trigger(sentence);
             }
 
             if (annyang) {
                 annyang.addCommands({
-                    "Solstice how is it going": () => writeAnswer('Fine, thank you')
+                    "solstice how is it going": () => writeAnswer('Fine, thank you')
                 });
+                annyang.start();
             }
 
             userInput.addEventListener('keydown', function (e) {
@@ -55,8 +65,7 @@
                     askSomething(userInput.value);
                     userInput.value = '';
                 }
-            })
-
+            });
         })
 
     </script>
