@@ -12,12 +12,14 @@
         .conversation {
             width: 100%;
             padding: 10em;
-            border: 1px solid #000000;
-            max-height: 350px;
-            overflow-y: auto;
         }
         .dialog, .tell {
             width: 100%;
+        }
+        .dialog {
+            border: 1px solid #000000;
+            max-height: 350px;
+            overflow-y: auto;
         }
         .solstice {
             color: sandybrown;
@@ -29,7 +31,7 @@
 </head>
 <body>
     <div class="conversation">
-        <div class="dialog"></div>
+        <div id="dialog" class="dialog"></div>
         <div class="tell">
             <input id="user-input" type="text" style="width: 100%;">
         </div>
@@ -39,11 +41,13 @@
         window.addEventListener('load', () => {
 
             const userInput = document.getElementById('user-input');
+            const dialog = document.getElementById('dialog');
 
             function writeAnswer (answer) {
                 let text = document.createElement('div');
                 text.classList.add('solstice');
                 text.innerText = answer;
+                dialog.appendChild(text.cloneNode());
             }
 
             function askSomething (sentence) {
@@ -51,10 +55,12 @@
                 text.classList.add('user');
                 text.innerText = sentence;
                 annyang.trigger(sentence);
+                dialog.appendChild(text.cloneNode());
             }
 
             if (annyang) {
                 annyang.addCommands({
+                    "solstice": () => writeAnswer('That\'s me'),
                     "solstice how is it going": () => writeAnswer('Fine, thank you')
                 });
                 annyang.start();
